@@ -24,7 +24,18 @@ window.addEventListener("DOMContentLoaded",function(){
 		//assert
 		return result === expectedResult;
 	});
+	test("Should be able to treat non numeric string as zero",function(){
+		//arrange
+		var number1 = "10",
+			number2 = "abc",
+			expectedResult = 10;
 
+		//act
+		var result = add(number1,number2);
+
+		//assert
+		return result === expectedResult;
+	});
 	test("Should be able to add functions returning numbers",function(){
 		//arrange
 		var f1 = function(){ return 10; },
@@ -37,6 +48,19 @@ window.addEventListener("DOMContentLoaded",function(){
 		//assert
 		return result === expectedResult;
 	});
+	test("Should be able to treat non-numeric string returned by functions as zero ",function(){
+		//arrange
+		var f1 = function(){ return 10; },
+			f2 = function(){ return "abc";},
+			expectedResult = 10;
+
+		//act
+		var result = add(f1,f2);
+
+		//assert
+		return result === expectedResult;
+	});
+	
 	test("Should be able to add array of numbers",function(){
 		//arrange
 		var numbers1 = [10,20, 30, 40],
