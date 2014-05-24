@@ -27,4 +27,3 @@ function Employee(id,firstName,salary){
      if (val > _salary) _salary = val;
   }
 }
-     
