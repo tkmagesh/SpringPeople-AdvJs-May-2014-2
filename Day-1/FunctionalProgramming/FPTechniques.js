@@ -60,6 +60,58 @@ function filter(list,predicate){
   return result;
 }
 
+function min(list,attrName){
+	var result = list[0][attrName];
+	for(var i=1;i<list.length;i++) 
+		if (list[i][attrName] < result) result = list[i][attrName];
+	return result;
+}
+
+function max(list,attrName){
+	var result = list[0][attrName];
+	for(var i=1;i<list.length;i++) 
+		if (list[i][attrName] > result) result = list[i][attrName];
+	return result;
+}
+
+function sum(list,attrName){
+	var result = 0;
+	for(var i=0;i<list.length;i++) 
+		result += list[i][attrName];
+	return result;
+}
+
+function countBy(list,predicate){
+	var result = 0;
+	for(var i=0;i<list.length;i++) 
+		if (predicate(list[i])) ++result;
+	return result;
+}
+
+function all(list,predicate){
+	for(var i=0;i<list.length;i++) 
+		if (!predicate(list[i])) return false;
+	return true;
+}
+
+function any(list,predicate){
+	for(var i=0;i<list.length;i++) 
+		if (predicate(list[i])) return true;
+	return false;
+}
+
+function groupBy(list,selector){
+	var result = {};
+	var selectorFn = typeof selector === "function" ? selector : function(item){ return item[selector];};
+	for(var i=0;i<list.length;i++){
+		var key = selectorFn(list[i]);
+		result[key] = result[key] || [];
+		result[key].push(list[i]);
+	}
+	return result;
+}
+
+
 /*
 min
 max
@@ -77,3 +129,22 @@ var categories = [
 	{id : 1, name : "grocery"},
 	{id : 2, name : "stationary"},
 ]
+
+function join(leftList, rightList, leftKeyName, rightKeyName, transformerFn){
+	var result = [];
+	for(var i=0;i<leftList.length;i++){
+		var leftKey = leftList[i][leftKeyName];
+		for(var j=0;j<rightList.length;j++){
+			var rightKey = rightList[j][rightKeyName];
+			if (leftKey === rightKey){
+				var resultObj = transformerFn(leftList[i],rightList[j]);
+				result.push(resultObj);
+			}
+		}
+	}
+	return result;
+}
+
+var productsWithCategoryName = join(products,categories,"category","id", function(p,c){
+  return { id : p.id, name : p.name, value : p.units * p.cost, category : c.name };
+});
