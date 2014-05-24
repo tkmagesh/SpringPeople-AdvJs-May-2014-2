@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax Demo</title>
+	<script src="jquery-2.1.1.js"></script>
+	<script>
+	$(function(){
+		$("#btnLoadProducts").click(function(){
+			$.ajax({
+				url : 'products.json',
+				type : 'get',
+				dataType : 'json',
+				contentType :'json',
+				success : function(data){
+					$(data).each(function(){
+						$("<li></li>").html(this.name).appendTo("#productList");
+					})
+				}
+			})
+		})
+	});
+	</script>
+</head>
+<body>
+	<input type="button" value="Load Products" id="btnLoadProducts">
+	<ul id="productList">
+		
+	</ul>
+</body>
+</html>
