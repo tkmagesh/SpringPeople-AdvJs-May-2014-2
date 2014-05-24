@@ -3,7 +3,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>jQuery Demo</title>
+	<style>
+	.invalid{
+		border : 1px solid red;
+		background-color: lightpink;
+	}
+	</style>
 	<script src="jquery-2.1.1.js"></script>
+	<script type="text/javascript">
+	function greetUser(){
+	   var name = jQuery("#txtName").val();
+	   if (name !== ""){
+	   		$("#txtName").removeClass("invalid");
+	   		var msg = "Hello " + name + ", Have a nice day";
+	   	    $("#divMessage").html(msg);
+	   } else {
+	   	//$("#txtName").css("border", "1px solid red").css("background-color", "lightpink");
+	   		$("#txtName").addClass("invalid");
+	   }
+	}
+	function init(){
+		$("#btnGreet").click(greetUser);
+	}
+	$(document).ready(init);
+	</script>
 </head>
 <body>
 	<span>Name :</span>
